@@ -1,15 +1,15 @@
 require_relative slideable.rb
 
-class Queen < Piece
+class Bishop < Piece
 
     include Slideable
 
     def symbol
-       :Q 
+       :B 
     end
 
     def move_dirs
-        LINEAR_DIRS + DIAGONAL_DIRS
+      DIAGONAL_DIRS
     end
 
 end
