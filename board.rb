@@ -1,4 +1,5 @@
 require_relative 'pieces.rb'
+require_relative 'rook.rb'
 
 class Board 
 
@@ -17,14 +18,14 @@ class Board
     end
     
     def populate
-        @board[0].map! {|ele| Piece.new}
-        @board[1].map! {|ele| Piece.new}
-        @board[2].map! {|ele| nil}
-        @board[3].map! {|ele| nil}
-        @board[4].map! {|ele| nil}
-        @board[5].map! {|ele| nil}
-        @board[6].map! {|ele| Piece.new}
-        @board[7].map! {|ele| Piece.new}
+        @board[0].map!.with_index {|arr, i| Piece.new(:w, @board, [0, i])}
+        @board[1].map!.with_index {|arr, i| Rook.new(:w, @board, [1, i])}
+        @board[2].map!.with_index {|arr, i| nil}
+        @board[3].map!.with_index {|arr, i| nil}
+        @board[4].map!.with_index {|arr, i| nil}
+        @board[5].map!.with_index {|arr, i| nil}
+        @board[6].map!.with_index {|arr, i| Piece.new(:b, @board, [6, i])}
+        @board[7].map!.with_index {|arr, i| Piece.new(:b, @board, [7, i])}
     end
 
 end

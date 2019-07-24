@@ -1,6 +1,10 @@
 class Piece
+
+    attr_accessor :color
+    attr_reader :pos, :board
+
     def initialize(color, board, pos)
-        @color = color 
+        @color = color
         @board = board
         @pos = pos
     end
@@ -14,7 +18,11 @@ class Piece
     end
 
     def symbol
+        "NullPiece"
+    end
+
+    def inspect
+        { 'symbol' => self.symbol, 'color' => @color, 'pos' => @pos }.inspect
     end
 
 end
-
