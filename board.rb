@@ -3,6 +3,8 @@ require_relative 'rook.rb'
 require_relative 'NullPiece.rb'
 require_relative 'bishop.rb'
 require_relative 'queen.rb'
+require_relative 'knight.rb'
+require_relative 'king.rb'
 class Board 
 
     attr_accessor :board
@@ -20,8 +22,8 @@ class Board
     end
     
     def populate
-        @board[0].map!.with_index {|arr, i| Rook.new(:w, @board, [0, i])}
-        @board[1].map!.with_index {|arr, i| Rook.new(:w, @board, [1, i])}
+        @board[0].map!.with_index {|arr, i| Knight.new(:w, @board, [0, i])}
+        @board[1].map!.with_index {|arr, i| King.new(:w, @board, [1, i])}
         @board[2].map!.with_index {|arr, i| NullPiece.new}
         @board[3].map!.with_index {|arr, i| NullPiece.new}
         @board[4].map!.with_index {|arr, i| NullPiece.new}
