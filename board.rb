@@ -15,6 +15,30 @@ class Board
         self.populate
     end
 
+    def find_king_pos(color)
+      @board.each_with_index do |row, i|
+        row.each_with_index do |piece, i2|
+          return [i, i2] if piece.symbol == :K && piece.color == color
+        end
+      end
+    end
+
+    def in_check?(color)
+        all_moves = []
+        @board.each_with_index do |row, i|
+            row.each_with_index do |piece, i2|
+            all_moves.concat(piece.moves) if piece.color != color && piece.symbol != :n
+            end
+        end
+        king_pos = self.find_king_pos(color)
+        all_moves.include?(king_pos)
+    end
+
+
+
+
+
+    
     def make_move(start_pos, end_pos)
         a,b = start_pos #1,2
         x,y = end_pos 

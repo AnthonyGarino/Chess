@@ -44,6 +44,14 @@ class Cursor
     handle_key(key)
   end
 
+  def update_pos(diff)
+    if (@cursor_pos[0] + diff[0]).between?(0, 7) && (@cursor_pos[1] + diff[1]).between?(0, 7)
+        @cursor_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
+    else
+        raise "invalid pos"
+    end
+  end
+
   private
 
   def read_char
@@ -80,19 +88,18 @@ class Cursor
     when :return || :space
         @cursor_pos
     when :left, :right, :up, :down 
-        self.update_pos(MOVES[key])
+        update_pos(MOVES[key])
         nil
     when :ctrl_c
         Process.exit(0)
     end
   end
 
-  def update_pos(diff)
-    if @cursor_pos[0] + diff[0].between?(0..7) && @cursor_pos[1] + diff[1].between?(0..7)
-        @cursor_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
-    else
-        raise "invalid pos"
-    end
-  end
 end
 
+# The cursor manages user input, according to which it updates its @cursor_pos. The display will render the square at @cursor_pos in a different color. 
+
+# You can use the #get_input method as is. 
+# #read_char handles console input. 
+
+# Render the square at the @cursor_pos display in a different color. Test that you can move your cursor around the board by creating and calling a method that loops through Display#render and Cursor#get_input

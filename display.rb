@@ -11,10 +11,27 @@ class Display
     end
 
     def render
-        # debugger
-        @board.each do |row| 
-            array = row.map do |piece|
-                piece.symbol
+        @board.each_with_index do |row, i| 
+            array = row.map.with_index do |piece, i2|
+                if [i, i2] == @cursor.cursor_pos
+                    "#{piece.symbol}".colorize(:red)
+                else
+                    piece.symbol
+                end
+            end
+            puts array.join(" ")
+        end
+        @cursor.get_input
+
+        puts ""
+        
+        @board.each_with_index do |row, i| 
+            array = row.map.with_index do |piece, i2|
+                if [i, i2] == @cursor.cursor_pos
+                    "#{piece.symbol}".colorize(:red)
+                else
+                    piece.symbol
+                end
             end
             puts array.join(" ")
         end
@@ -22,4 +39,5 @@ class Display
     end
 
 end
+
 
