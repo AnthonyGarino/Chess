@@ -57,7 +57,10 @@ class Board
     def move_piece(color, start_pos, end_pos)
         a,b = start_pos
         x,y = end_pos 
-        raise ArgumentError.new "no piece at starting position" if self.board[a][b] == nil
+        @board[a][b]
+
+        raise ArgumentError.new "no piece at starting position ^^" if self.board[a][b] == nil
+        raise ArgumentError.new "not a valid move ^^" if !@board[a][b].valid_moves.include?(end_pos)
         
         self.board[x][y], self.board[a][b] = self.board[a][b], NullPiece.new("no color", @board, start_pos)
         self.board[x][y].pos = end_pos

@@ -14,10 +14,11 @@ class Piece
     end
 
     def move_into_check?(end_pos)
-        dupe = Board.new
-        dupe.board = @board.dup
-        dupe.move_piece(@color, @pos, end_pos)
-        dupe.in_check?(@color)        
+        new_board = Board.new
+        new_board.board = @board.dup
+
+        new_board.move_piece(@color, @pos, end_pos)
+        new_board.in_check?(@color)        
     end
 
     def valid_moves

@@ -32,32 +32,31 @@ class Pawn < Piece
     end
 
     def forward_steps
-    #   debugger
         new_arr = []        
 
-        if self.color == :w && at_start_row? == true
-            if self.board[self.pos[0] + 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] + 1, self.pos[1] + 0]
+        if self.color == :w && self.at_start_row? == true
+            if self.board[self.pos[0] + 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] + 1, self.pos[1]]
             end
-            if self.board[self.pos[0] + 2][self.pos[1] + 0].color == "no color" && self.board[self.pos[0] + 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] + 2, self.pos[1] + 0]
+            if self.board[self.pos[0] + 2][self.pos[1]].color == "no color" && self.board[self.pos[0] + 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] + 2, self.pos[1]]
             end
-        elsif self.color == :w && at_start_row? == false
-            if self.board[self.pos[0] + 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] + 1, self.pos[1] + 0]
+        elsif self.color == :w && self.at_start_row? == false
+            if self.board[self.pos[0] + 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] + 1, self.pos[1]]
             end
         end
 
-        if self.color == :b && at_start_row? == true
-            if self.board[self.pos[0] - 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] - 1, self.pos[1] + 0]
+        if self.color == :b && self.at_start_row? == true
+            if self.board[self.pos[0] - 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] - 1, self.pos[1]]
             end
-            if self.board[self.pos[0] - 2][self.pos[1] + 0].color == "no color" && self.board[self.pos[0] + 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] - 2, self.pos[1] + 0]
+            if self.board[self.pos[0] - 2][self.pos[1]].color == "no color" && self.board[self.pos[0] - 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] - 2, self.pos[1]]
             end
-        elsif self.color == :b && at_start_row? == false
-            if self.board[self.pos[0] - 1][self.pos[1] + 0].color == "no color"
-                new_arr << [self.pos[0] - 1, self.pos[1] + 0]
+        elsif self.color == :b && self.at_start_row? == false
+            if self.board[self.pos[0] - 1][self.pos[1]].color == "no color"
+                new_arr << [self.pos[0] - 1, self.pos[1]]
             end
         end
 
@@ -65,22 +64,20 @@ class Pawn < Piece
     end
 
     def side_attacks
-
         new_array = []
 
         if self.color == :w
-            if self.board[self.pos[0] + 1][self.pos[1] + 1].color == :b
+            if self.board[self.pos[0] + 1][self.pos[1] + 1] != nil && self.board[self.pos[0] + 1][self.pos[1] + 1].color == :b
                 new_array << self.board[self.pos[0] + 1][self.pos[1] + 1].pos
             end
-            if self.board[self.pos[0] + 1][self.pos[1] - 1].color == :b
+            if self.board[self.pos[0] + 1][self.pos[1] - 1].color != nil && self.board[self.pos[0] + 1][self.pos[1] - 1].color == :b
                 new_array << self.board[self.pos[0] + 1][self.pos[1] - 1].pos
             end
         elsif self.color == :b
-            # debugger
-            if self.board[self.pos[0] - 1][self.pos[1] + 1].color == :w
+            if self.board[self.pos[0] - 1][self.pos[1] + 1] != nil && self.board[self.pos[0] - 1][self.pos[1] + 1].color == :w
                 new_array << self.board[self.pos[0] - 1][self.pos[1] + 1].pos
             end
-            if self.board[self.pos[0] - 1][self.pos[1] - 1].color == :w 
+            if self.board[self.pos[0] - 1][self.pos[1] - 1] != nil && self.board[self.pos[0] - 1][self.pos[1] - 1].color == :w 
                 new_array << self.board[self.pos[0] - 1][self.pos[1] - 1].pos
             end
         end
