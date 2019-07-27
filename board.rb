@@ -15,6 +15,22 @@ class Board
         self.populate
     end
 
+    def dup
+        board_clone = @board.dup.map do |row|
+            row.dup.map do |piece|
+                piece.dup
+            end
+        end
+
+        board_clone.each do |row| #come back here
+            row.each do |piece|
+                piece.board = @board_clone
+            end
+        end
+
+        board_clone
+    end
+    
     def find_king_pos(color)
       @board.each_with_index do |row, i|
         row.each_with_index do |piece, i2|
@@ -34,17 +50,17 @@ class Board
         all_moves.include?(king_pos)
     end
 
+    def checkmate?(color)
+        self.in_check?(color) && self.valid_moves.length == 0
+    end
 
-
-
-
-    
-    def make_move(start_pos, end_pos)
-        a,b = start_pos #1,2
+    def move_piece(color, start_pos, end_pos)
+        a,b = start_pos
         x,y = end_pos 
         raise ArgumentError.new "no piece at starting position" if self.board[a][b] == nil
         
-        self.board[x][y], self.board[a][b] = self.board[a][b], nil
+        self.board[x][y], self.board[a][b] = self.board[a][b], NullPiece.new("no color", @board, start_pos)
+        self.board[x][y].pos = end_pos
     end
     
     def populate
@@ -58,10 +74,10 @@ class Board
         @board[0][7] = Rook.new(:w, @board, [0, 7])
 
         @board[1].map!.with_index {|arr, i| Pawn.new(:w, @board, [1, i])}
-        @board[2].map!.with_index {|arr, i| NullPiece.new}
-        @board[3].map!.with_index {|arr, i| NullPiece.new}
-        @board[4].map!.with_index {|arr, i| NullPiece.new}
-        @board[5].map!.with_index {|arr, i| NullPiece.new}
+        @board[2].map!.with_index {|arr, i| NullPiece.new("no color", @board, [2, i])}
+        @board[3].map!.with_index {|arr, i| NullPiece.new("no color", @board, [3, i])}
+        @board[4].map!.with_index {|arr, i| NullPiece.new("no color", @board, [4, i])}
+        @board[5].map!.with_index {|arr, i| NullPiece.new("no color", @board, [5, i])}
         @board[6].map!.with_index {|arr, i| Pawn.new(:b, @board, [6, i])}
         
         @board[7][0] = Rook.new(:b, @board, [7, 0])
@@ -75,23 +91,3 @@ class Board
     end
 
 end
- 
-# 1. Write a Display class to handle your rendering logic. Display class should access the board. Require the colorize gem so you can render in color.
-# 2. Download this cursor.rb file.  Initialize Cursor with a cursor_pos and an instance of Board. The cursor manages user input, according to which it updates its @cursor_pos. The display will render the square at @cursor_pos in a different color. Within display.rb require cursor.rb and set the instance variable @cursor to Cursor.new([0,0], board).
-# In cursor.rb we've' provided a KEYMAP that translates keypresses into actions and movements. The MOVES hash maps possible movement differentials. You can use the #get_input method as is. #read_charhandles console input. Skim over #read_char to gain a general understanding of how the method works. 
-# 3. Fill in the #handle_key(key) method. Use a case statement that switches on the value of key. Depending on the key, #handle_key(key) will a) return the @cursor_pos (in case of :return or :space), b) call #update_poswith the appropriate movement difference from MOVES and return nil (in case of :left, :right, :up, and :down), or c) exit from the terminal process (in case of :ctrl_c). 
-# NB: To exit a terminal process, use the Process.exit method. Pass it the status code 0 as an argument. 
-# # 5. Fill in the #update_pos(diff) method. 
-# # It should use the diff to reassign @cursor_pos to a new position. 
-# # You may wish to write a Board#valid_pos? method to ensure you update @cursor_pos only when the new position is on the board.
-# 6. Render the square at the @cursor_pos display in a different color. 
-# A nice but optional addition to your cursor class is a boolean instance variable selected that will allow you to display the cursor in a different color when it has selected a piece. To implement this you will need to #toggle_selectedeverytime :return or :space is hit.
-
-# Phase IV: Board#in_check?(color) and Board#checkmate?(color)
-# 1. Create an #in_check?(color) method for board that returns whether a player is in check. You can implement this by (1) finding the position of the King on the board then (2) seeing if any of the opposing pieces can move to that position.
-# 2. Then write a #checkmate?(color) method. If the player is in check, and if none of the player's pieces have any #valid_moves (to be implemented in a moment), then the player is in checkmate.
-# NB Here's' a four-move sequence to get to checkmate from a starting board for your checkmate testing:
-# f2, f3
-# e7, e5
-# g2, g4
-# d8, h4

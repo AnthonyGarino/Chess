@@ -1,7 +1,6 @@
 class Piece
 
-    attr_accessor :color
-    attr_reader :pos, :board
+    attr_accessor :color, :board, :pos
 
     def initialize(color, board, pos)
         @color = color
@@ -14,8 +13,18 @@ class Piece
         @board[a][b] == nil
     end
 
-    def valid_moves #phase IV
+    def move_into_check?(end_pos)
+        dupe = Board.new
+        dupe.board = @board.dup
+        dupe.move_piece(@color, @pos, end_pos)
+        dupe.in_check?(@color)        
     end
+
+    def valid_moves
+      possible_moves = self.moves
+      possible_moves.reject { |move| move_into_check?(move) }  
+    end
+    
 
     def symbol
         "NullPiece"

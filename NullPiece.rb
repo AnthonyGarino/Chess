@@ -4,8 +4,10 @@ require_relative "pieces.rb"
 class NullPiece < Piece
 
     attr_reader :color, :symbol
-    def initialize
-        @color = "no color"
+    def initialize(color, board, pos)
+        @color = color
+        @pos = pos
+        @board = board
         @symbol = :n
     end
 end

@@ -9,7 +9,7 @@ module Slideable
     moves = []
     self.move_dirs.each do |arr|
       clone = self.pos.dup
-
+      debugger
       future_color = self.board[clone[0] + arr[0]][clone[1] + arr[1]].color
       # debugger
       until clone[0] == 7 || clone[0] == 0 || clone[1] == 7 || clone[1] == 0 || future_color == self.color
