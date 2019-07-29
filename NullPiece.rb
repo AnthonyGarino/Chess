@@ -4,21 +4,17 @@ require_relative "pieces.rb"
 class NullPiece < Piece
 
     attr_reader :color, :symbol
-    def initialize(color, board, pos)
-        @color = color
-        @pos = pos
-        @board = board
-        @symbol = :n
+    def initialize
+        @color = "no color"
+        @symbol = " "
+    end
+
+    def inspect
+        { 'symbol' => self.symbol }.inspect
     end
 end
 
 
 
 
-
-
-
-
-# class Board 
-#   include Singleton
-# end
+#singleton

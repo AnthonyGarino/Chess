@@ -1,34 +1,41 @@
 class Piece
+    require 'byebug'
 
-    attr_accessor :color, :board, :pos
+    attr_accessor :color, :board_class_instance, :board, :pos
 
     def initialize(color, board, pos)
         @color = color
-        @board = board
+        @board_class_instance = board
+        @board = board.board
         @pos = pos
     end
-    
+
     def empty?
         a,b = @pos
         @board[a][b] == nil
     end
 
-    def move_into_check?(end_pos)
-        new_board = Board.new
-        new_board.board = @board.dup
+    def valid_moves 
+        good_moves = []
 
-        new_board.move_piece(@color, @pos, end_pos)
-        new_board.in_check?(@color)        
-    end
+        possible_moves = self.moves
+        possible_moves.each do |move|
+            pos_clone = @pos.dup
+            @board_class_instance.move_piece!(@pos, move)
+            
+            if @board_class_instance.in_check?(@color)
+                @board_class_instance.undo(move, pos_clone)
+                next
+            end
+            @board_class_instance.undo(move, pos_clone)
+            good_moves << move
+        end
 
-    def valid_moves
-      possible_moves = self.moves
-      possible_moves.reject { |move| move_into_check?(move) }  
+        good_moves
     end
     
-
     def symbol
-        "NullPiece"
+        "piece"
     end
 
     def inspect
@@ -36,3 +43,5 @@ class Piece
     end
 
 end
+
+#Valid Moves

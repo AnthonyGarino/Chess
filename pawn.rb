@@ -3,12 +3,15 @@ require 'byebug'
 class Pawn < Piece
 
     def symbol
-        :P
+        if color == :w
+            "\u2659".encode('utf-8')
+        else
+            "#{"\u265F".force_encoding('utf-8')}"
+        end 
     end
 
     def moves
         new_arr = []
-        # debugger
         new_arr.concat(self.forward_steps) if self.forward_steps != nil
         new_arr.concat(self.side_attacks) if self.side_attacks != nil
 

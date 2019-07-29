@@ -40,6 +40,7 @@ class Cursor
   end
 
   def get_input
+    # @board.render
     key = KEYMAP[read_char]
     handle_key(key)
   end
@@ -48,7 +49,7 @@ class Cursor
     if (@cursor_pos[0] + diff[0]).between?(0, 7) && (@cursor_pos[1] + diff[1]).between?(0, 7)
         @cursor_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
     else
-        raise "invalid pos"
+        puts "invalid pos"
     end
   end
 
@@ -85,8 +86,9 @@ class Cursor
 
   def handle_key(key)
     case key
-    when :return || :space
-        @cursor_pos
+    when :space, :return
+        puts ""
+        return @cursor_pos
     when :left, :right, :up, :down 
         update_pos(MOVES[key])
         nil
