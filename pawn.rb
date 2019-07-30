@@ -22,10 +22,10 @@ class Pawn < Piece
 
     def at_start_row?
         if self.color == :w
-            return true if self.pos[0] == 1
+            return self.pos[0] == 1
         end
         if self.color == :b
-            return true if self.pos[0] == 6
+            return self.pos[0] == 6
         end
     end
 
@@ -89,3 +89,8 @@ class Pawn < Piece
     end
 
 end
+
+
+# automatically deletes all pieces at the places that the opposite color piece can go to
+# prob undo method that doesn't' recreate a piece after the piece takes it
+# doesn't' let do 2nd move with pawn
